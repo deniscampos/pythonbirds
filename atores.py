@@ -37,7 +37,7 @@ class Ator():
         :param tempo: o tempo do jogo
         :return: posição x, y do ator
         """
-        return 1, 1
+        return self.x, self.y
 
     def colidir(self, outro_ator, intervalo=1):
         """
@@ -51,16 +51,26 @@ class Ator():
         :param intervalo: Intervalo a ser considerado
         :return:
         """
-        pass
+        x1, y1 = self.x, self.y
+        x2, y2 = outro_ator.x, outro_ator.y
+
+        if self.status == ATIVO and outro_ator.status == ATIVO:
+            if x2 - intervalo <= x1 <= x2 + intervalo and y2 - intervalo <= y1 <= y2 + intervalo:
+                self.status = DESTRUIDO
+                outro_ator.status = DESTRUIDO
+                self.caracter()
+                outro_ator.caracter()
+
 
 
 
 class Obstaculo(Ator):
-    pass
+    _caracter_ativo = 'O'
 
 
 class Porco(Ator):
-    pass
+    _caracter_ativo = '@'
+    _caracter_destruido = '+'
 
 
 class Passaro(Ator):
@@ -88,7 +98,9 @@ class Passaro(Ator):
 
         :return: booleano
         """
-        return True
+        if self.x != self._x_inicial or self.y != self._y_inicial:
+            return True
+        return False
 
     def colidir_com_chao(self):
         """
@@ -96,7 +108,9 @@ class Passaro(Ator):
         o status dos Passaro deve ser alterado para destruido, bem como o seu caracter
 
         """
-        pass
+        if self.y <= 0:
+            self.status = DESTRUIDO
+            self.caracter()
 
     def calcular_posicao(self, tempo):
         """
@@ -112,7 +126,7 @@ class Passaro(Ator):
         :param tempo: tempo de jogo a ser calculada a posição
         :return: posição x, y
         """
-        return 1, 1
+        return self.x, self.y
 
 
     def lancar(self, angulo, tempo_de_lancamento):
@@ -124,12 +138,16 @@ class Passaro(Ator):
         :param tempo_de_lancamento:
         :return:
         """
-        pass
-
+        self._angulo_de_lancamento = math.pi * angulo / 180
+        self._tempo_de_lancamento = tempo_de_lancamento
 
 class PassaroAmarelo(Passaro):
-    pass
+    _caracter_ativo = 'A'
+    _caracter_destruido = 'a'
+    velocidade_escalar = 30
 
 
 class PassaroVermelho(Passaro):
-    pass
+    _caracter_ativo = 'V'
+    _caracter_destruido = 'v'
+    velocidade_escalar = 20

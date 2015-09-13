@@ -98,9 +98,7 @@ class Passaro(Ator):
 
         :return: booleano
         """
-        if self.x != self._x_inicial or self.y != self._y_inicial:
-            return True
-        return False
+        return self._tempo_de_lancamento != None
 
     def colidir_com_chao(self):
         """
@@ -138,7 +136,7 @@ class Passaro(Ator):
         :param tempo_de_lancamento:
         :return:
         """
-        self._angulo_de_lancamento = math.pi * angulo / 180
+        self._angulo_de_lancamento = math.radians(angulo)
         self._tempo_de_lancamento = tempo_de_lancamento
 
 class PassaroAmarelo(Passaro):

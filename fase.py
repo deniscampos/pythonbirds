@@ -38,28 +38,28 @@ class Fase():
 
 
     def adicionar_obstaculo(self, *obstaculos):
-        self._obstaculos.extend(obstaculos)
         """
         Adiciona obstáculos em uma fase
 
         :param obstaculos:
         """
+        self._obstaculos.extend(obstaculos)
 
     def adicionar_porco(self, *porcos):
-        self._porcos.extend(porcos)
         """
         Adiciona porcos em uma fase
 
         :param porcos:
         """
+        self._porcos.extend(porcos)
 
     def adicionar_passaro(self, *passaros):
-        self._passaros.extend(passaros)
         """
         Adiciona pássaros em uma fase
 
         :param passaros:
         """
+        self._passaros.extend(passaros)
 
     def status(self):
         """
@@ -105,8 +105,7 @@ class Fase():
 
         for p in self._passaros:
             if p.status == ATIVO:
-                return p.lancar(angulo, tempo)
-        pass
+                p.lancar(angulo, tempo)
 
 
     def calcular_pontos(self, tempo):

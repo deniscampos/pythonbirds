@@ -104,9 +104,9 @@ class Fase():
         """
 
         for p in self._passaros:
-            if p.status == ATIVO:
+            if p.status == ATIVO and not p.foi_lancado():
                 p.lancar(angulo, tempo)
-
+                break
 
     def calcular_pontos(self, tempo):
         """
@@ -119,8 +119,17 @@ class Fase():
         """
         pontos=[]
 
+        for passaro in self._passaros:
+            passaro.calcular_posicao(tempo)
+            for ator in self._porcos + self._obstaculos:
+                if(passaro.status == ATIVO):
+                    passaro.colidir(ator, self.intervalo_de_colisao)
+                    passaro.colidir_com_chao()
+                else:
+                    break
+            pontos.append(self._transformar_em_ponto(passaro))
 
-        for ator in self._porcos + self._passaros + self._obstaculos:
+        for ator in self._porcos + self._obstaculos:
             pontos.append(self._transformar_em_ponto(ator))
 
         return pontos

@@ -143,9 +143,9 @@ def rodar_fase(fase):
 
 if __name__ == '__main__':
     fase = Fase(intervalo_de_colisao=32)
-    passaros = [PassaroVermelho(30, 30), PassaroAmarelo(30, 30), PassaroAmarelo(30, 30)]
-    porcos = [Porco(750, 1), Porco(700, 1)]
-    obstaculos = [Obstaculo(310, 100)]
+    passaros = [PassaroVermelho(30, 30), PassaroAmarelo(30, 30), PassaroVermelho(30, 30), PassaroAmarelo(30, 30)]
+    porcos = [Porco(750, 1), Porco(700, 1), Porco(650, 1), Porco(725,30), Porco(675,30), Porco(700,60)]
+    obstaculos = [Obstaculo(400, 200)]
 
     fase.adicionar_obstaculo(*obstaculos)
     fase.adicionar_passaro(*passaros)

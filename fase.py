@@ -103,9 +103,9 @@ class Fase():
         :param tempo: Tempo de lançamento
         """
 
-        for p in self._passaros:
-            if p.status == ATIVO and not p.foi_lancado():
-                p.lancar(angulo, tempo)
+        for passaro in self._passaros:
+            if passaro.status == ATIVO and not passaro.foi_lancado():
+                passaro.lancar(angulo, tempo)
                 break
 
     def calcular_pontos(self, tempo):
@@ -118,15 +118,29 @@ class Fase():
         :return: objeto do tipo Ponto
         """
         pontos=[]
+        primeiro = True
 
         for passaro in self._passaros:
             passaro.calcular_posicao(tempo)
+
             for ator in self._porcos + self._obstaculos:
                 if(passaro.status == ATIVO):
                     passaro.colidir(ator, self.intervalo_de_colisao)
                     passaro.colidir_com_chao()
                 else:
                     break
+
+            #Apenas o pássaro que será lançado irá aparecer no estilingue, os demais no chão
+            if passaro.status == ATIVO and not passaro.foi_lancado():
+                if primeiro:
+                    passaro.x = passaro._x_inicial
+                    passaro.y = passaro._y_inicial
+                    primeiro = False
+                else:
+                    passaro.x = 1
+                    passaro.y = 1
+
+
             pontos.append(self._transformar_em_ponto(passaro))
 
         for ator in self._porcos + self._obstaculos:
